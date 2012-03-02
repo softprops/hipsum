@@ -11,6 +11,7 @@ object Parse {
 trait Requests {
   import dispatch._
   val Host = :/("hipsterjesus.com") / "api"
+  def asText = As.string.andThen { Parse.apply }
 }
 
 object Text extends Requests {
@@ -32,8 +33,6 @@ object Text extends Requests {
          }.getOrElse(Left("Invalid json"))
        }
     }
-
-  private def asText = As.string.andThen { Parse.apply }
 
   private def error(t: Throwable) =
     "Sigh... : %s" format t.getMessage
